@@ -8,21 +8,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Connector {
+    //String url = "jdbc:mysql://www.db4free.net:3306/freq_admin";
+    //String username = "freq_admin";
+    //String password = "freq_admin";
+    private static String url = "jdbc:mysql://localhost:3306?serverTimezone=Europe/Moscow&useSSL=false";
+    private static String username = "root";
+    private static String password = "11111111";
+
     public static void executeQuery (String query){
         try{
-            //String url = "jdbc:mysql://www.db4free.net:3306/freq_admin";
-            //String username = "freq_admin";
-            //String password = "freq_admin";
-            String url = "jdbc:mysql://localhost:3306?serverTimezone=Europe/Moscow&useSSL=false";
-            String username = "root";
-            String password = "11111111";
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
             try (Connection conn = DriverManager.getConnection(url, username, password)){
                 System.out.println("Connection to Store DB succesfull!");
                 Statement statement = conn.createStatement();
                 System.out.println(query);
                 statement.executeUpdate(query);
-
             }
         }
         catch(Exception ex){
@@ -35,9 +35,6 @@ public class Connector {
     public static Map getDataFromBD (String query){
         Map<Integer, String> result = new HashMap<>();;
         try{
-            String url = "jdbc:mysql://localhost:3306?serverTimezone=Europe/Moscow&useSSL=false";
-            String username = "root";
-            String password = "11111111";
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
             try (Connection conn = DriverManager.getConnection(url, username, password)){
                 System.out.println("Connection to Store DB succesfull!");

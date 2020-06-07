@@ -18,28 +18,6 @@ public class TextFile extends Thread {
         this.path = path;
         wordMap = new HashMap<>(); // создаем свой map
     }
-    public static void executeQuery (String query){
-        try{
-
-            String url = "jdbc:mysql://localhost:3306?serverTimezone=Europe/Moscow&useSSL=false";
-            String username = "root";
-            String password = "11111111";
-            Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
-            try (Connection conn = DriverManager.getConnection(url, username, password)){
-                System.out.println("Connection to Store DB succesfull!");
-                Statement statement = conn.createStatement();
-                System.out.println(query);
-                statement.executeUpdate(query);
-
-            }
-        }
-        catch(Exception ex){
-            System.out.println("Connection failed...");
-
-            System.out.println(ex);
-        }
-
-    }
     public static void printFrequency(Map wordMap) {
 
         // Создание связанного списка для хранения всего набора записей
@@ -104,7 +82,6 @@ public class TextFile extends Thread {
         return wordMap;
     }
     public void run(){
-
         System.out.printf("%s started... \n", Thread.currentThread().getName());
         System.out.println(path);
         wordMap = GetStatistics(path); //
@@ -112,7 +89,7 @@ public class TextFile extends Thread {
             Map.Entry<String, Integer> entry = entries.next();
             //System.out.println(entry.getValue());
             String query = "INSERT INTO `freq`.`words` (`word`, `freq`, `file_id`) VALUES ('" + entry.getKey()+ "', '" + entry.getValue()+ "', '" + index +"')";
-            executeQuery(query);
+            Connector.executeQuery(query);
         }
         //printFrequency(wordMap);
         System.out.printf("%s fiished... \n", Thread.currentThread().getName());
